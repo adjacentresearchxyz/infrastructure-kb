@@ -1,8 +1,12 @@
 ---
-title: Cosmos Tools
+title: Builds and Deployments
 layout: home
 parent: Concepts
 ---
+
+Almost always when operating infrastructure for various applications (validators, nodes, keepers, other bots, etc.) you are running opensource code. This is both a good and a bad thing. It is likely that when you first start operating the code you have not done a complete walkthrough and do not fully understand all the inctricies of the code (especially if you are a small team).
+
+
 
 # Building your tools and Cosmos
 
@@ -15,6 +19,9 @@ While Git repositories can also be backdoored, it’s a lot harder to do so due 
 _Docker containers_: Docker containers (even with automatic builds) are no exception, in fact, while Docker support signatures, containers aren’t usually signed and Docker does not enforce signature verification by default.
 
 In this chapter, we will explain how to perform simple and reproducible builds of Cosmos’ gaiad and gaiacli as well as to maintain your own patches on top of the upstream sources.
+
+# SCA and DAST Scanning 
+
 
 ## Performing reproducible builds
 
