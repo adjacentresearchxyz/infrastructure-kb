@@ -1,6 +1,7 @@
 ---
 title: Values
 layout: home
+parent: Concepts
 ---
 
 # Excellence[¶](#excellence "Permalink to this headline")

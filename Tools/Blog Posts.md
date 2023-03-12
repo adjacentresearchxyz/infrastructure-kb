@@ -1,6 +1,7 @@
 ---
 title: Technical Knowledge Blogs
 layout: home
+parent: Tools and Resources
 ---
 
 Article

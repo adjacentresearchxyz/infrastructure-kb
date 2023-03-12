@@ -1,6 +1,7 @@
 ---
 title: Key Management
 layout: home
+parent: Concepts
 ---
 
 # Key Management[](#key-management "Permalink to this headline")

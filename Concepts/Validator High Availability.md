@@ -1,6 +1,7 @@
 ---
 title: High Availability
 layout: home
+parent: Concepts
 ---
 
 # Validator High-Availability[](#validator-high-availability "Permalink to this headline")

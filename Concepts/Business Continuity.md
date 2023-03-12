@@ -1,6 +1,7 @@
 ---
 title: Business Continuity
 layout: home
+parent: Concepts
 ---
 
 # Business Continuity[](#business-continuity "Permalink to this headline")

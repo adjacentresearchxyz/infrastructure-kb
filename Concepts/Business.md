@@ -1,6 +1,7 @@
 ---
 title: Business
 layout: home
+parent: Concepts
 ---
 
 All of Certus One’s founders fully trust each other, have a long history of working together and neither of us has any intention to walk away. However, we still need to consider the risk of either of us quitting or us falling out with each other, and protect our company and our customers from this risk.

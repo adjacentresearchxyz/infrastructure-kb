@@ -1,6 +1,7 @@
 ---
 title: Consensus Layer Provisioning
 layout: home
+parent: Nodes
 ---
 
 # Provisioning Consensus Layer (Checkpoint Sync)

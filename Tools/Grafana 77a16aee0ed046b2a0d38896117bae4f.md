@@ -1,6 +1,7 @@
 ---
 title: Grafana
 layout: home
+parent: Tools and Resources
 ---
 
 # Grafana

@@ -1,6 +1,7 @@
 ---
 title: Systems Design
 layout: home
+parent: Concepts
 ---
 
 # Systems Design[](#systems-design "Permalink to this headline")

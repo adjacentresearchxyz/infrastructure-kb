@@ -1,6 +1,7 @@
 ---
 title: Validator Operations
 layout: home
+parent: Concepts
 ---
 
 # Validator Operations Guide[](#validator-operations-guide "Permalink to this headline")

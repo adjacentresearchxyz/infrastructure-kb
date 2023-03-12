@@ -1,6 +1,7 @@
 ---
 title: Cosmos Tools
 layout: home
+parent: Concepts
 ---
 
 # Building your tools and Cosmos

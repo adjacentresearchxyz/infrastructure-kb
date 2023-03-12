@@ -59,7 +59,7 @@ function initSearch() {
     if (request.status >= 200 && request.status < 400) {
       var docs = JSON.parse(request.responseText);
 
-      lunr.tokenizer.separator = /[\s\-/]+/
+      lunr.tokenizer.separator = /[\s/]+/
 
       var index = lunr(function(){
         this.ref('id');
@@ -313,7 +313,7 @@ function searchLoaded(index, docs) {
         resultLink.appendChild(resultPreviews);
 
         var content = doc.content;
-        for (var j = 0; j < Math.min(previewPositions.length, 3); j++) {
+        for (var j = 0; j < Math.min(previewPositions.length, 5); j++) {
           var position = previewPositions[j];
 
           var resultPreview = document.createElement('div');

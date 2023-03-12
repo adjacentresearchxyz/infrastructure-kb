@@ -1,6 +1,7 @@
 ---
 title: Linux Configuration
 layout: home
+parent: Concepts
 ---
 
 # Linux Best Practices[](#linux-best-practices "Permalink to this headline")

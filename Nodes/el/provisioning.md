@@ -1,6 +1,7 @@
 ---
 title: Execution Provisioing
 layout: home
+parent: Nodes
 ---
 
 # Provisioning/Scaling Execution Layer

@@ -1,6 +1,7 @@
 ---
 title: Terraform
 layout: home
+parent: Tools and Resources
 ---
 
 # Terraform

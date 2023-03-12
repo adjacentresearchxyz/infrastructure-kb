@@ -1,6 +1,7 @@
 ---
 title: Consensus Layer Nodes
 layout: home
+parent: Nodes
 ---
 
 # CL Nodes

@@ -1,6 +1,7 @@
 ---
 title: HSM for Signing
 layout: home
+parent: Concepts
 ---
 
 # HSM for Signing[](#hsm-for-signing "Permalink to this headline")

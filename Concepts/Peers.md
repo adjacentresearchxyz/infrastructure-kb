@@ -1,6 +1,7 @@
 ---
 title: Peers
 layout: home
+parent: Concepts
 ---
 
 # Tendermint P2P Layer[](#tendermint-p2p-layer "Permalink to this headline")

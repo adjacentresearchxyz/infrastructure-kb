@@ -1,6 +1,7 @@
 ---
 title: Security Engineering
 layout: home
+parent: Concepts
 ---
 
 # Security Engineering[](#security-engineering "Permalink to this headline")
