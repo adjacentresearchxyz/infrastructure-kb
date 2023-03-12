@@ -6,49 +6,38 @@ parent: Concepts
 
 Almost always when operating infrastructure for various applications (validators, nodes, keepers, other bots, etc.) you are running opensource code. This is both a good and a bad thing. It is likely that when you first start operating the code you have not done a complete walkthrough and do not fully understand all the inctricies of the code (especially if you are a small team).
 
+However there are there are some things you can do to make sure you are running the code you expect in a secure, reproducible and compatible way.
 
+# Building
+Generally you can build the code in a few different ways, either building from source, or running in a container. 
 
-# Building your tools and Cosmos
+Building from source is the most flexible, but also the most time consuming. While various blockchain applications are generally developed in go (geth, cosmos, etc.) or rust (substrate, solana, etc.) building the applications is not standardized and thus leads to having to maintain many differentiated workflows and pipelines (not to mention the non-standardized deployment and operation of the applications). 
 
-Since there is no official source for binary builds of Cosmos, validators and users have to build the node and client themselves.
+Often developers package their application into a container, publish it to a registry and allow operators to easily pull and run the application in an isolated enviroment. This is extremely helpful for both reproducible builds along with consistent operation and deployment. A developer packaging their application into a container (even if automated) does not mean that it is secure, and is the application specification that you are looking to operate. 
 
-This is _very good_ security-wise, and we hope it stays this way. Trusting another party to provide unaltered binary builds is very dangerous as you cannot easily verify whether the build hasn’t been backdoored. There have been plenty of cases of compromised supply chains in the past [[1]](#puush).
+[Docker](https://www.docker.com/) is a containerization platform that allows you to package an application and all of its dependencies into a standardized unit for software development. Docker containers support signing of each container build but generally the signature verification is not enforced by default leaving a potential for malicious or unintended functions of the application. 
 
-While Git repositories can also be backdoored, it’s a lot harder to do so due to without getting caught, since the repo is an immutable, replicated ledger (almost like - hah - a blockchain!) as long as the repository is regularly pulled by contributors.
+When deciding to run your infrastructure with a container first approach you should 
+- Operate your own container registry
+- Always build and sign your own containers from the source 
+- After pulling the container, verify the signature of the container
 
-_Docker containers_: Docker containers (even with automatic builds) are no exception, in fact, while Docker support signatures, containers aren’t usually signed and Docker does not enforce signature verification by default.
+# SAST and DAST Scanning 
+It is important to understand the security of the application you are running. For many new protocols or applications AppSec might be an overlooked part of their CI/CD pipeline (or you might just want to verify on your own). Given all applications you run you build the containers from source it is easy to integrate an automated AppSec Pipeline. For a super light and simple way to get started with workflow you can utlize the Adjacent [build-template](https://github.com/adjacentresearchxyz/build-template) which will build, sign, and publish your container along with performing automated software composition testing and DAST scans.
 
-In this chapter, we will explain how to perform simple and reproducible builds of Cosmos’ gaiad and gaiacli as well as to maintain your own patches on top of the upstream sources.
+Static Application Security Testing (SAST) and Dynamic Application Security Testing (DAST) are two types of security testing that can be used to identify security vulnerabilities in your application. 
 
-# SCA and DAST Scanning 
+SAST scans the source code of your application and looks for common security vulnerabilities. SAST is a great way to identify security vulnerabilities early in the development process, but it is not able to identify vulnerabilities that are introduced by the application’s runtime environment. 
 
+DAST scans the running application and looks for common security vulnerabilities. DAST is a great way to identify security vulnerabilities that are introduced by the application’s runtime environment, but it is not able to identify vulnerabilities that are introduced by the source code.
 
-## Performing reproducible builds
+These are both helpful tools to integrate into your pipeline whether you developed the application or it is opensource.
 
-Reproducible builds ensure that two parties which build the same binary from the same source will get an identical binary. This makes it a lot easier to trust third party binaries, since they can be independently verified. It also makes it easier to trust your _own_ builds.
+## Mirroring and Forking 
+In order to maintain your own pipeline and build process you will need to fork/mirror or otherwise maintain the application you are looking to operate. Often this is not nesseacry. You generally fork an application if you are looking to contribute or change the application in a sigifigant way. You might want to mirror an application if you simply want to ensure that you will have access to the code if location is is hosted is to be taken down (an easy way to do this is by simply rehosting on ipfs with [git-protocol-rehost](https://github.com/adjacentresearchxyz/git-protocol-rehost)). 
 
-Go makes this particularly easy - Go builds are reproducible by default, as long as your build environment (including the compiler version and GOPATH) are identical.
+Often it makes the most sense to create your workflow/pipeline and include the application you are looking to operate as a submodule. This allows you to 
+- Maintain your own pipeline and build process
+- Freeze the commit/version of the application you are looking to operate
 
-By pinning the exact version of each dependency, we can ensure identical build inputs.
-
-Todo
-
-Explain why reproducible builds are important and add a simple guide to use the buildscripts
-
-Here you can find example build scripts for reproducible Cosmos builds: [Certus Build scripts](https://github.com/certusone/buildscripts)
-
-## Maintaining a mirror/fork
-
-In order to be able to easily carry patches and check the authenticity of the Cosmos repository, we always build from our local mirror of the cosmos-sdk repository (which also comes in handy when GitHub is down).
-
-Sometimes it might be necessary for you to apply small patchsets to the Cosmos node, for features like our custom HSM signer ([HSM for Signing](hsm.html)), modifications to the peer discovery code, or emergency bugfixes for exploits that you can’t wait for the upstream team to patch because they’re causing monetary losses _right now_.
-
-Even if you don’t plan to run a Cosmos fork most of the time, you should be prepared to do so on a short notice, if necessary.
-
-A plain mirror can simply be turned into a fork by just committing on top of the master, and doing rebases against origin/master when there’s a new release.
-
-We don’t recommend forking the code base unnecessarily - most of the time, it’s much better to create a PR against the upstream repository. However, you sometimes need to maintain internal modifications - if you do so, try to keep them as small, nonintrosive and self-contained as possible, and in places where the code doesn’t change often to avoid large merge conflicts when rebasing onto upstream master.
-
-This article is a great introduction on how to maintain a fork: [How to maintain a fork](https://rhonabwy.com/2016/04/04/how-to-maintain-a-git-remote-fork/)
-
-For the Cosmos use-case, it might also make sense to mirror/fork Tendermint. You will need to add a `[source]` directive to the `Gopkg.toml` in the cosmos-sdk project to pull your Tendermint fork, and either commit the modified lockfile to your cosmos-sdk repo or do a full dep ensure run at build time (not recommended).
+Note: while this approach does allow you to maintain your own pipeline and build process it does not mirror the application repository. If the application repository is deleted you will no longer be able to fetch it (again why you should rehost with something like [git-protocol-rehost](https://github.com/adjacentresearchxyz/git-protocol-rehost) if you do not maintain your own git instance)
