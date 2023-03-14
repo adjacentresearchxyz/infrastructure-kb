@@ -58,7 +58,7 @@ terraform {
 
 Cloud manages all remote builds along with maintaining a compete overview of al infrastructure deployed under the organization. 
 
-[Terraform | HashiCorp Cloud Platform](https://cloud.hashicorp.com/products/terraform)
+[TerraformHashiCorp Cloud Platform](https://cloud.hashicorp.com/products/terraform)
 
 ### Examples
 

@@ -29,7 +29,7 @@ The ideal forms of custody are listed and detailed below
 
 #### Primary Custodian
 
-The ideal setup for custody of your collateral and earned rewards is by using a primary custodian like [genesis custody](https://genesistrading.com/custody/), [fireblock](https://www.fireblocks.com/), [coinbase custody](https://custody.coinbase.com/), etc.. Although many staked assets are still not yet available to be properly held within these platforms. Thus self-custodying the keys becomes required.
+The ideal setup for custody of your collateral and earned rewards is by using a primary custodian like [fireblocks](https://www.fireblocks.com/), [coinbase custody](https://custody.coinbase.com/), etc.. Although many staked assets are still not yet available to be properly held within these platforms. Thus self-custodying the keys becomes required.
 
 #### Hardware wallet in a secure environment
 
@@ -51,15 +51,13 @@ If maintaining custody on the server, ideally you can encrypt and password prote
 
 Unfortunately some protocols require you to have the private keys **unencrypted and non password protected** which is a very large security risk. But if needed it might be required in order to participate in the network, if possible you should also strongly encourage the developer team of the protocol to enable any (or all) of the following: encryption, password protection, hardware support, ledger support, primary custodian support.
 
-Additionally follow the security guidelines in the #Linux and #Security sections.
-
 ## Validator Key
 
 Custody of the validator key is much different than custody of a key that has funds against it.
 
 The validator key does not have any actual value against it, however control over the validator key can lead to potential missed rewards and potential slashing of your collateral.
 
-Additionally validator keys almost always need to be held on the validation node itself which poses a security risk (again see the #Linux and #Security sections for more information). o
+Additionally validator keys almost always need to be held on the validation node itself which poses a security risk (again see the #Linux and #Security sections for more information).
 
 Ideally the protocol has built in KMS support ([here](https://docs.tendermint.com/master/tools/remote-signer-validation.html#running-against-kms) is a really guide guide to built in KMS support in tendermint protocols).
 
