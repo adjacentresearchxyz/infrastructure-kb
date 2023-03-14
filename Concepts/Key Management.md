@@ -69,7 +69,7 @@ If not same goes for above, reaching out to the core development team and seeing
 
 ## Software validator or wallet key that is not needed on the server
 
-Sometimes you may have a validator or a wallet key that is not nessecarily needed to be on the node. For example it does not need to continually sign attestations and validate transactions. In this case you can store the `keystore` in an offline, coldstorage enviroment after generating it using the CLI. Generally the only case that you will need this is if the wallet is purely used just for withdrawing staked rewards. When you need to withdraw rewards simply import the keystore from the cold storage enviroment for use and then delete once down. 
+Sometimes you may have a validator or a wallet key that is not necessarily needed to be on the node. For example it does not need to continually sign attestations and validate transactions. In this case you can store the `keystore` in an offline, coldstorage environment after generating it using the CLI. Generally the only case that you will need this is if the wallet is purely used just for withdrawing staked rewards. When you need to withdraw rewards simply import the keystore from the cold storage environment for use and then delete once down. 
 
 ## Further Resources
 - [Ethereum staking Attestation Key Management](https://www.attestant.io/posts/protecting-validator-keys/)

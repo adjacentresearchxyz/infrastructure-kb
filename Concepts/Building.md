@@ -34,7 +34,7 @@ DAST scans the running application and looks for common security vulnerabilities
 These are both helpful tools to integrate into your pipeline whether you developed the application or it is opensource.
 
 ## Mirroring and Forking 
-In order to maintain your own pipeline and build process you will need to fork/mirror or otherwise maintain the application you are looking to operate. Often this is not nesseacry. You generally fork an application if you are looking to contribute or change the application in a sigifigant way. You might want to mirror an application if you simply want to ensure that you will have access to the code if location is is hosted is to be taken down (an easy way to do this is by simply rehosting on ipfs with [git-protocol-rehost](https://github.com/adjacentresearchxyz/git-protocol-rehost)). 
+In order to maintain your own pipeline and build process you will need to fork/mirror or otherwise maintain the application you are looking to operate. Often this is not necessary. You generally fork an application if you are looking to contribute or change the application in a significant way. You might want to mirror an application if you simply want to ensure that you will have access to the code if location is is hosted is to be taken down (an easy way to do this is by simply rehosting on ipfs with [git-protocol-rehost](https://github.com/adjacentresearchxyz/git-protocol-rehost)). 
 
 Often it makes the most sense to create your workflow/pipeline and include the application you are looking to operate as a submodule. This allows you to 
 - Maintain your own pipeline and build process
