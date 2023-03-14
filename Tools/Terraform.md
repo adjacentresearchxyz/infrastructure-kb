@@ -8,7 +8,7 @@ parent: Tools and Resources
 
 ### Overview
 
-[Terraform](Terraform%205bdc9ddd7b2342e6b67b83d866006fd6.md) is a an infrastructure as code solution that allows you to provision, change, and version and resource in any cloud environment.
+Terraform is a an infrastructure as code solution that allows you to provision, change, and version and resource in any cloud environment.
 
 Some common use cases for terraform are 
 
@@ -62,11 +62,7 @@ Cloud manages all remote builds along with maintaining a compete overview of al 
 
 ### Examples
 
-Examples of a terraform deployment with [NixOS](Nix%207784f9d6cc4e4d22b641606d10105fc4.md) can be found below
+Examples of a terraform deployment with NixOS can be found below
 
 - [https://github.com/adjacentresearchxyz/deployment](https://github.com/adjacentresearchxyz/deployment)
 - [https://github.com/adjacentresearchxyz/solana-deployment](https://github.com/adjacentresearchxyz/solana-deployment)
-
-### Reading
-
-[List](Terraform%205bdc9ddd7b2342e6b67b83d866006fd6/List%2072d88b4bb1bc44a6b8bbf3432d985450.md)

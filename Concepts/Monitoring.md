@@ -1,8 +1,8 @@
----
+<!-- ---
 title: Monitoring
 layout: home
 parent: Concepts
----
+--- -->
 
 # Monitoring, Alerting and Instrumentation[](#monitoring-alerting-and-instrumentation "Permalink to this headline")
 

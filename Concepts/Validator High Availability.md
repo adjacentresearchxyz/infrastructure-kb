@@ -4,33 +4,73 @@ layout: home
 parent: Concepts
 ---
 
-# Validator High-Availability[](#validator-high-availability "Permalink to this headline")
+# High Availability
+Operating distributed systems at scale requires a high degree of availability. This is especially true for validators, which are a critical component of the network. This page describes the various approaches to validator high availability.
 
-Tendermint is a globally consistent, byzantine-fault tolerant consensus-based replicated state machine - the gold standard in distributed systems.
+Operating blockchain infrastructure (minus RPC/Archive nodes) often requires you to run with a private key. Of the many things to think about when operating a distributed system management and access control around the private key is of upmost importance. 
 
-A single validator, however, is not highly available. It doesn’t need to be - the network tolerates single validator failures just fine.
+## TLDR
 
-However, as the validator operator, things look different and your tolerance for single validator failures is pretty low. Sooner or later, every validator operator is confronted with the question of making their validator fault-tolerant. Unfortunately, there’s no established procedure for this and each team is forced to build their own high availability solution.
+When standing up a validator for staking considering high availability is very important. The common ways for operating validators are a single validator, an active-passive, or an active-active setup. Each has its own advantages and disadvantages and you might deploy different protocols with different HA setups.
 
-This article portrays some possible HA topologies and their pros and cons.
+### Single
 
-Running a Tendermint validator is - like any distributed system - a delicate balance between ensuring availability and consistency/correctness (availability as in “up and signing blocks”, and consistency as in “no byzantine behavior”).
+Running a single validator node is the simplest to setup and ensures the lowest risk for double-signing but trades off potential downtime
 
-As is well known, the [CAP theorem](https://en.wikipedia.org/wiki/CAP_theorem) states that you can only pick two of partition tolerance, consistency and availability. Since network partitions are inevitable in any distributed system, you can’t pick CA, and the only choices are AP and CP.
+#### Advantages
 
-With Cosmos validators, the penalty for inconsistency (double signing!) is much harsher than unavailability (you even get a few minutes to fix it before you are slashed). This means that the only reasonable choice is a CP system - if there’s even the slightest possibility that more than one node is active at the same time, it needs to sacrifice availability (i.e. stop signing).
+- Lowest risk of double signing and slashing
 
-## Single Node Validator[](#single-node-validator "Permalink to this headline")
+#### Disadvantages
 
-Since inconsistency is so dangerous, running a single-node validator is a very reasonable choice. Modern datacenter hardware, in a modern datacenter, with redundant networking, designed by an experienced systems architect, has a very low failure rate sufficient for many low-stakes validators.
+- Due to networking, datacenter, or hardware failures long periods of downtime can be expected
+- In the event of downtime you will suffer a loss of rewards, which is concerning for large staking balances
+- If you cannot access the machine during downtime you cannot safely activate a new validator at risk of the first coming back online and double signing
 
-As any sysadmin will tell you, badly designed high availability setups tend to fail at a much higher frequency than reliable single-node ones.
+### Active Passive
 
-By never running two nodes at the same time, the risk of double signing is very low - one would have to trick your replacement validator into signing an earlier block while it recovers or exploit a vulnerability in Tendermint.
+Operating an active validator with a passive validator waiting (completely synced, keys ready, just needs to be activated) with a manual switch over.
 
-However, if the hardware or datacenter does fail in a catastropic way, you will be down for an extended period of time until you have got replacement hardware in place and re-synced. While acceptable for low-stakes validators, most commercial validator operations won’t be able to accept this risk. Even redundant power and networking setups have a non-zero chance of failure, in fact, most systems aren’t fully isolated and failures often tend to be correlated.
+#### Advantages
 
-(True story: your router has redundant PSUs? Oops, both fans just simultaneously ingested a packaging foil that someone left in the rack).
+- Due to a manual switch over between the active and passive nodes you can ensure that double signing is minimized
+- An extra node in a different location, different hardware (in case of a hardware failure) ready to go when needed
+
+#### Disadvantages
+
+- Requires manual switch over which is a lot of risk on an engineer, best to design with separate levels of access control
+- If you cannot access the machine during downtime you cannot safely activate a new validator at risk of the first coming back online and double signing
+
+### Active Active
+
+Running a consensus layer on top of two or more fully active validators, where you have a switch to choose which is actively voting, while the other's votes are not submitted to the chain. An example is [Raft Consensus](https://raft.github.io/)
+
+#### Advantages
+
+- Next to zero downtime
+- Never missed rewards
+
+#### Disadvantages
+
+- Additional Software for additional errors
+- If there is an error high chance you are slashed
+
+## Single Node Validator
+Running a single node is the simplest and most common way to run a validator it is also a reasonable choice given modern hardware, redundent networking, and with well built out datacenters all leading to a pretty low failure rate for validators. 
+
+Alas, there always comes a time when 
+- there is a hardware failure 
+- there are some hiccups in the networking
+- you are [kicked off](https://www.infostor.com/news/hetzner-surprises-everyone-with-cloud-data-centre-ban-for-ethereum-nodes/) of the datacenter
+- your datacenter literally [catches on fire](https://www.pcmag.com/news/ovhcloud-data-center-devastated-by-fire-entire-building-destroyed)
+
+or for a variety of other reasons. 
+
+When this happens (or ideally ahead of time) you need to consider your backup and restart proceedure (how fast can your validator be back up operating?). Switching when you are not prepared means, getting a new server (potentially with a new hosting provider), setting up your machine with required software to operate (hopefully you already have a pipeline for this), and notably transferring your keys
+
+> Quick note on keys, you should be using something such as a a key management system (KMS) or secret manager to store your keys. This is a system that allows you to store your keys in a secure and centralized location indpendent of the servers operating your nodes. This gives you access to the keys when you need them. Refer to the [Key Management](/concepts/key-management) and [Custody](/concepts/Custody.md) page for more information.
+
+To top it all off you might be doing all of this in the early hours of the morning just to make sure you dont have extended periods of downtime... this is when you should start to consider alternative options like active-standby and active-active.
 
 ## Active-Standby Validator[](#active-standby-validator "Permalink to this headline")
 
@@ -71,18 +111,6 @@ This provides guaranteed consistency as well as very high availability (the CAP 
 While our active-active technology - called JANUS - currently isn’t an open source project, we open-sourced all of its dependencies and the testing framework [[3]](#testing) we use. We’re closely following upstream discussions and may decide to open source JANUS later.
 
 We believe that active-active validator setups are the best way going forward, and look forward to contribute to the community discussions regarding active-active setups.
-
-[[1]](#id1)
-
-[https://github.com/tendermint/tendermint/issues/1758](https://github.com/tendermint/tendermint/issues/1758)
-
-[[2]](#id2)
-
-[https://github.com/tendermint/kms/issues/29](https://github.com/tendermint/kms/issues/29)
-
-[[3]](#id3)
-
-[Testing your tooling](testing.html)
 
 ### Network topology[](#network-topology "Permalink to this headline")
 

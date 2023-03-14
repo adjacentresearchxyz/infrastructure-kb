@@ -6,8 +6,7 @@ parent: Tools and Resources
 
 # Systemd
 
-Used to manage *all* processes for a consistent, flexible, configurable approach
+Can be used to manage processes for a consistent, flexible, configurable approach if not containerized (although systemd [portable services](https://systemd.io/PORTABLE_SERVICES/) are also a good option especially if you want to preserve the flexability of system and networking control that containers limit you on)
 
 ### Resources
-
-[systemd for Administrators, Part XVIII](http://0pointer.de/blog/projects/resources.html)
+- [Systemd for Administrators, Part XVIII](http://0pointer.de/blog/projects/resources.html)

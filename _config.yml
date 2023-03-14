@@ -4,6 +4,9 @@ theme: just-the-docs
 
 url: https://kb.adjacentresearch.xyz
 
+# Set a path/url to a favicon that will be displayed by the browser
+favicon_ico: ./assets/logo.jpg
+
 include:
   - Concepts
   - Nodes
@@ -11,7 +14,7 @@ include:
 
 aux_links:
   Adjacent: https://adjacentresearch.xyz
-  Twitter: https://twitter.com/adjacentresearchxyz
+  Twitter: https://twitter.com/adjacent___
 
 search_enabled: true
 search:

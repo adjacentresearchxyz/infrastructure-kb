@@ -4,65 +4,76 @@ layout: home
 parent: Concepts
 ---
 
-# Key Management[](#key-management "Permalink to this headline")
+# Key Management
 
-For validator operations, you need two types of keys in the Cosmos network.
+When operating a validator the most important part is managing and custody of the keys. There are generally two types of keys in a staking setup.
 
 **Validator Key**
 
-As discussed in [HSM for Signing](hsm.html), this key is used by your nodes to participate in the Tendermint consensus.
+A validator key is what is used to sign your attestation, commitment, or validation of a given block. This is what certifies the messages sent from your validator.
 
-**Account Key**
+**Wallet Key**
 
-This key for your Cosmos account. The account holds your validator’s balances and claim rights for rewards. This is the account you initially bonded your validator with, and can also unbond it with.
+Your wallet key(s) are more important than the validator keys as they are what give you access to unstake and withdraw your rewards and your collateral. Loss of your wallet key(s) is loss of your funds.
 
-As the handling of the _Validator Key_ has already been addressed in the HSM article, we will now focus on the _Account Key_.
+## Wallet
 
-## Handling of the Account Key[](#handling-of-the-account-key "Permalink to this headline")
+The wallet key(s) are what give and control complete access to all of your funds (staked collateral and rewards that are earned). Loosing this key means loss of all your funds, thus security and proper management is very important.
 
-The Account Key is required once to initially bond your validator.
+The ideal forms of custody are listed and detailed below
 
-Afterwards in validator operations it is only needed to:
+- A primary custodian
+- Hardware wallet in a secure environment
+- Software wallet in a secure environment
+- Software wallet on the validator (**LAST RESORT**)
 
--   Vote on governance proposals
--   Create governance proposals from your validator’s identity
--   Unbond your validator’s self-bond
--   Unrevoke the validator
--   Bond more ATOMs from the validator’s balance
--   Transfer ATOMs from your validator’s balance (if they are stored in the validator account)
--   Modify validator details (moniker, commission)
--   Sign any transaction from this account
+#### Primary Custodian
 
-As we can see, the key is needed for many important validator tasks.
+The ideal setup for custody of your collateral and earned rewards is by using a primary custodian like [genesis custody](https://genesistrading.com/custody/), [fireblock](https://www.fireblocks.com/), [coinbase custody](https://custody.coinbase.com/), etc.. Although many staked assets are still not yet available to be properly held within these platforms. Thus self-custodying the keys becomes required.
 
-Some of these look easy to automate like voting on governance and bonding rewards.
+#### Hardware wallet in a secure environment
 
-However, the key’s capabilities include unbonding your validator’s self-bond, modify the validator and transfer funds, which makes it highly critical.
+When managing the control of your own keys you ideally keep them in a segregated and air-gapped environment with redundancy and multi layers of access, stored within a hardware wallet.
 
-The account key basically indicates the ownership of the validator. It is very important to **protect** and safeguard the key.
+This is the best form of self-custody is secure and gives you a lot of flexibility in wallet providers, etc..
 
----
+> Ledger is an extremely popular hardware wallet, a decent amount of protocols are supported natively or through "experimental features". Often you can install applications on the Ledger but they are not supported on Ledger Live, meaning you will have to use a web wallet for the specific protocol with ledger. This is still secure since the keys are on a hardware device.
 
-It quickly becomes apparent that you don’t want to keep this key on an online machine - especially not stored on a normal machine like in the (encrypted) format of gaiacli.
+#### Software wallet in a secure environment
 
-![_images/ledger.jpg](_images/ledger.jpg) _["IMG_7984"](https://www.flickr.com/photos/kndynt2099/38807488710/in/photostream/) by Dennis Amith is licensed under [CC BY-NC 4.0](http://creativecommons.org/licenses/by-nc/4.0)_
+Newer projects and protocols might not have developed a ledger application (or something similar) and thus you will be unable to custody your keys on a hardware device. The next best form is using a software based wallet but store the device used to access it in a secure environment with a similar setup to the hardware wallet above.
 
-A possibility introduced by the Cosmos Team is the **Ledger Nano S**. It is a hardware wallet that stores the private key of your validator account just like a HSM without any possibility for you to extract the key (except for the backup phrase generated during setup).
+#### Software wallet on the validator (**LAST RESORT**)
 
-Support for the Ledger is built into the latest version of `gaiacli`. However, the [Ledger App](https://github.com/cosmos/ledger-cosmos) is still not in the public application store and has to be installed manually.
+If a project does not have a hardware application built out, or support for a software based wallet, you will most likely need to custody the keys that hold your funds directly on the validator. This is an absolute **last resort** as hacks into your server open you up to potentially loosing all of your funds.
 
-In order to sign a transaction or message you need to click a physical button on the Ledger and are also able to check the authenticity of the transaction content on the display to prevent any attacks even on a compromised system.
+If maintaining custody on the server, ideally you can encrypt and password protect your private keys especially if they are holding staked collateral and rewards.
 
-The added security is basically a **no-brainer** for every validator since losing the key basically means the _death_ of the validator’s business.
+Unfortunately some protocols require you to have the private keys **unencrypted and non password protected** which is a very large security risk. But if needed it might be required in order to participate in the network, if possible you should also strongly encourage the developer team of the protocol to enable any (or all) of the following: encryption, password protection, hardware support, ledger support, primary custodian support.
 
-### Drawbacks[](#drawbacks "Permalink to this headline")
+Additionally follow the security guidelines in the #Linux and #Security sections.
 
-The need to physically interact with the Ledger makes it _mostly_ impossible to automate any of these tasks like auto-bonding or governance participation.
+## Validator Key
 
-Since the slashing for governance participation was removed [[1]](#governance), automatic governance participation is not necessary or useful - the voting period will be long enough for human interaction, which is the whole point of it - governance is not _supposed_ to be automated, and the validator will want carefully assess each governance proposal.
+Custody of the validator key is much different than custody of a key that has funds against it.
 
-Auto-bonding and similar automation is of little use outside the Game of Stakes. Bonding involves large sums of money and should be a manual activity.
+The validator key does not have any actual value against it, however control over the validator key can lead to potential missed rewards and potential slashing of your collateral.
 
-[[1]](#id1)
+Additionally validator keys almost always need to be held on the validation node itself which poses a security risk (again see the #Linux and #Security sections for more information). o
 
-[https://github.com/cosmos/cosmos-sdk/pull/2395](https://github.com/cosmos/cosmos-sdk/pull/2395)
+Ideally the protocol has built in KMS support ([here](https://docs.tendermint.com/master/tools/remote-signer-validation.html#running-against-kms) is a really guide guide to built in KMS support in tendermint protocols).
+
+> If a protocol does not have built in KMS support, you should see if you can reach out to them and put it on their roadmap.
+
+If the validation keys cannot be stored within a KMS, ideally they are password protected and encrypted.
+
+If not same goes for above, reaching out to the core development team and seeing if they can put it on their roadmap becomes a priority.
+
+## Software validator or wallet key that is not needed on the server
+
+Sometimes you may have a validator or a wallet key that is not nessecarily needed to be on the node. For example it does not need to continually sign attestations and validate transactions. In this case you can store the `keystore` in an offline, coldstorage enviroment after generating it using the CLI. Generally the only case that you will need this is if the wallet is purely used just for withdrawing staked rewards. When you need to withdraw rewards simply import the keystore from the cold storage enviroment for use and then delete once down. 
+
+## Further Resources
+- [Ethereum staking Attestation Key Management](https://www.attestant.io/posts/protecting-validator-keys/)
+- [Key Management Certus One](https://kb.certus.one/key_management.html)
+- [HSM Certus One](https://kb.certus.one/hsm.html)
