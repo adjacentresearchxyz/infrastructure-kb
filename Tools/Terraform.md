@@ -28,7 +28,7 @@ Terraform allows small teams to work fast and scale quickly. Having all of your 
 
 The terraform cli is pretty straightforward, and documentation can be found here 
 
-[Basic CLI Features | Terraform by HashiCorp](https://www.terraform.io/cli/commands)
+[Basic CLI Features](https://www.terraform.io/cli/commands)
 
 One of the most useful functions of the cli is that if you are connected to a terraform cloud backend you can switch `workspaces`. This allows you to use the same provisioning code for many (even slightly different) projects. Without workspaces you generally would be overwriting current resources. 
 

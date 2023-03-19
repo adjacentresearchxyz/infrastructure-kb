@@ -23,6 +23,6 @@ This is an in depth knowledge base on best practices for operating a validator a
 - [Prometheus](https://adjacentresearchxyz.github.io/infrastructure-kb/Tools/Prometheus.html)
 - [Systemd](https://adjacentresearchxyz.github.io/infrastructure-kb/Tools/Systemd.html)
 - [Tailscale](https://adjacentresearchxyz.github.io/infrastructure-kb/Tools/Tailscale.html)
-- [Technical Knowledge Blogs](https://adjacentresearchxyz.github.io/infrastructure-kb/Tools/Technical%20Knowledge%20Base.html)
+- [Technical Knowledge Blogs](https://adjacentresearchxyz.github.io/infrastructure-kb/Tools/Blog%20Posts.html)
 - [Terraform](https://adjacentresearchxyz.github.io/infrastructure-kb/Tools/Terraform.html)
 - [Vault](https://adjacentresearchxyz.github.io/infrastructure-kb/Tools/Vault.html)
