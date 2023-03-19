@@ -12,6 +12,7 @@ This is an in depth knowledge base on best practices for operating a validator a
 - [Builds and Deployments](https://adjacentresearchxyz.github.io/infrastructure-kb/Concepts/Building.html)
 - [High Availability](https://adjacentresearchxyz.github.io/infrastructure-kb/Concepts/Validator%20High%20Availability.html)
 - [Key Management](https://adjacentresearchxyz.github.io/infrastructure-kb/Concepts/Key%20Management.html)
+- [Custody](https://adjacentresearchxyz.github.io/infrastructure-kb/Concepts/Custody.html)
 
 ## Tools and Resources
 ### Various tools and resources to help with infrastructure deployment, management, and operation
